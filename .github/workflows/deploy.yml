@@ -40,4 +40,4 @@ jobs:
           # - '.' for plain HTML/CSS/JS
           # - 'build' for React apps
           # - 'dist' for Vue/Vite/Angular apps
-          SOURCE_DIR: '.'
+          SOURCE_DIR: 'website'
