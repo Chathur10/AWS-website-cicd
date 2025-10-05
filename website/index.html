@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Track Your Habits</h1>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                <i data-feather="moon"></i>
+                <i data-feather="sun"></i>
+            </button>
+        </header>
+
+        <div class="add-habit-card">
+            <input type="text" id="habit-input" placeholder="Add a new habit...">
+            <div class="add-habit-actions">
+                <input type="number" id="target-input" placeholder="Target (1-7)" min="1" max="7" required>
+                <button id="add-btn" aria-label="Add habit">Add</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <select id="sort-select" aria-label="Sort habits">
+                <option value="added">Sort by: Date Added</option>
+                <option value="progress-desc">Sort by: Progress</option>
+                <option value="streak-desc">Sort by: Streak</option>
+            </select>
+            <div class="control-buttons">
+                <button id="reset-week-btn" aria-label="Reset week"><i data-feather="refresh-cw"></i></button>
+                <button id="clear-all-btn" aria-label="Clear all"><i data-feather="trash-2"></i></button>
+            </div>
+        </div>
+
+        <ul id="habit-list"></ul>
+
+        <div class="chart-container">
+            <h2>Progress Overview</h2>
+            <canvas id="progress-chart"></canvas>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Habit</h2>
+                <button class="close-btn" id="modal-close-btn"><i data-feather="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <label for="modal-habit-name">Habit Name</label>
+                <input type="text" id="modal-habit-name" required>
+                <label for="modal-habit-target">Weekly Target</label>
+                <input type="number" id="modal-habit-target" min="1" max="7" required>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel-btn">Cancel</button>
+                <button id="modal-save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
