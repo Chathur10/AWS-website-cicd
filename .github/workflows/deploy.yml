@@ -1,0 +1,43 @@
+name: Deploy Website to AWS S3
+
+on:
+  push:
+    branches:
+      - main  # Triggers deployment on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2 (Optional): Build step for frameworks like React, Vue, etc.
+      # If your project is just static HTML/CSS/JS, you can remove this block.
+      - name: Build Project
+        run: |
+          if [ -f package.json ]; then
+            npm install
+            npm run build || echo "No build script found, skipping build."
+          else
+            echo "No package.json found — assuming static site."
+          fi
+
+      # Step 3: Upload files to S3
+      - name: Sync Files to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+          # 👇 Change this based on your project type:
+          # - '.' for plain HTML/CSS/JS
+          # - 'build' for React apps
+          # - 'dist' for Vue/Vite/Angular apps
+          SOURCE_DIR: '.'
